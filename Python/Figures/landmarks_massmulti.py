@@ -1,9 +1,6 @@
 
 '''
-Conduct mass-multivariate two-sample testing of the the landmark data.
-
-This script calculates the Hotelling's T2 statistic for each landmark,
-then conducts nonparametric, permutation inference.
+Plot results for mass-multivariate analysis of the the landmark data.
 '''
 
 import os,unipath
@@ -17,17 +14,6 @@ plt.rcParams['font.family']      = 'Arial'
 plt.rcParams['xtick.labelsize']  = 8
 plt.rcParams['ytick.labelsize']  = 8
 
-# colors = np.array([
-#        [ 57,  51,  44],
-#        [ 87,  98, 105],
-#        [135, 121, 109],
-#        [148, 100,  83],
-#        [197, 151,  99],
-#        [202, 196, 172],
-#        [220, 221, 210],
-#        [242, 243, 234],
-#        [244, 246, 241]
-#    ]) / 255
 
 colors = np.array([
 	[177,139,187],
