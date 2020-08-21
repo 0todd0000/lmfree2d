@@ -31,29 +31,26 @@ process.data <- function (a){
 }
 
 
-#(0) Conduct GPA for one dataset:
-dirREPO <- dirname( dirname( sys.frame(1)$ofile ) )
-dir0    <- file.path(dirREPO, "Data", "Landmarks", "1_Original")
-name    <- "Bell"
-fname0  <- paste( file.path(dir0, name), ".csv", sep="")
-a       <- read.csv(fname0)   # 4 columns: shape, landmark, x, y
-df      <- process.data(a)
-
-
-
-# #(1) Conduct GPA for all files:
+# #(0) Conduct GPA for one dataset:
 # dirREPO <- dirname( dirname( sys.frame(1)$ofile ) )
-# dir0    <- file.path(dirREPO, "Data", "Landmarks", "1_Original")
-# dir1    <- file.path(dirREPO, "Data", "Landmarks", "2_GPA")
-# names  <- c('Bell', 'Comma', 'Device8',    'Face', 'Flatfish', 'Hammer',    'Heart', 'Horseshoe', 'Key')
+# name    <- "Bell"
+# fname0  <- file.path(dirREPO, "Data", name, "landmarks.csv")
+# a       <- read.csv(fname0)   # 4 columns: shape, landmark, x, y
+# df      <- process.data(a)
 
-# for (name in names){
-	# fname0 <- paste( file.path(dir0, name), ".csv", sep="")
-	# fname1 <- paste( file.path(dir1, name), ".csv", sep="")
-	# a      <- read.csv(fname0)   # 4 columns: shape, landmark, x, y
-	# df     <- process.data(a)
-	# write.table(df, file=fname1, row.names=F, sep=",")
-# }
+
+
+#(1) Conduct GPA for all files:
+dirREPO <- dirname( dirname( sys.frame(1)$ofile ) )
+names  <- c('Bell', 'Comma', 'Device8',    'Face', 'Flatfish', 'Hammer',    'Heart', 'Horseshoe', 'Key')
+
+for (name in names){
+	fname0  <- file.path(dirREPO, "Data", name, "landmarks.csv")
+	fname1  <- file.path(dirREPO, "Data", name, "landmarks_gpa.csv")
+	a      <- read.csv(fname0)   # 4 columns: shape, landmark, x, y
+	df     <- process.data(a)
+	write.table(df, file=fname1, row.names=F, sep=",")
+}
 
 
 
