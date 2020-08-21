@@ -12,21 +12,21 @@ gpa <- function (A){
 }
 
 process.data <- function (a){
-	SHAPE      <- a[,1]
-	LANDMARK   <- a[,2]
-	nshapes    <- max(SHAPE)  # number of shapes
-	nlandmarks <- max(LANDMARK)  # number of landmarks
-	A          <- as.vector( t(a[,3:4]) )
-	dim(A)     <- c(2,nlandmarks,nshapes)
-	A          <- aperm(A, c(2,1,3) )
-	r          <- gpa(A)
-	X          <- r[,1]
-	Y          <- r[,2]
-	df         <- data.frame(SHAPE=SHAPE, LANDMARK=LANDMARK, X=X, Y=Y)
-	df$SHAPE   <- formatC(df$SHAPE, format = 'd')
-	df$SHAPE   <- formatC(df$LANDMARK, format = 'd')
-	df$X       <- formatC(df$X, digits = 3, format = 'f')
-	df$Y       <- formatC(df$Y, digits = 3, format = 'f')
+	SHAPE       <- a[,1]
+	LANDMARK    <- a[,2]
+	nshapes     <- max(SHAPE)  # number of shapes
+	nlandmarks  <- max(LANDMARK)  # number of landmarks
+	A           <- as.vector( t(a[,3:4]) )
+	dim(A)      <- c(2,nlandmarks,nshapes)
+	A           <- aperm(A, c(2,1,3) )
+	r           <- gpa(A)
+	X           <- r[,1]
+	Y           <- r[,2]
+	df          <- data.frame(SHAPE=SHAPE, LANDMARK=LANDMARK, X=X, Y=Y)
+	df$SHAPE    <- formatC(df$SHAPE, format = 'd')
+	df$LANDMARK <- formatC(df$LANDMARK, format = 'd')
+	df$X        <- formatC(df$X, digits = 3, format = 'f')
+	df$Y        <- formatC(df$Y, digits = 3, format = 'f')
 	df
 }
 
@@ -49,7 +49,7 @@ for (name in names){
 	fname1  <- file.path(dirREPO, "Data", name, "landmarks_gpa.csv")
 	a      <- read.csv(fname0)   # 4 columns: shape, landmark, x, y
 	df     <- process.data(a)
-	write.table(df, file=fname1, row.names=F, sep=",", quote = FALSE)
+	write.table(df, file=fname1, row.names=FALSE, sep=",", quote = FALSE)
 }
 
 
