@@ -77,6 +77,6 @@ plt.show()
 
 
 
-# #(2) Save figure:
-# fnamePDF  = os.path.join(dirREPO, 'Figures', 'landmarks_massmulti.pdf')
-# plt.savefig(fnamePDF)
+#(2) Save figure:
+fnamePDF  = os.path.join(dirREPO, 'Figures', 'landmarks_massmulti.pdf')
+plt.savefig(fnamePDF)
