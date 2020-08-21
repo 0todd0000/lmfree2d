@@ -68,12 +68,12 @@ for name in names:
 ### save:
 fname1   = os.path.join(dirREPO, 'Results', 'landmarks_massmulti.csv')
 n        = max([res['z'].size  for res in results])
-header   = 'T2max,T2crit,P,' + ','.join( ['T2-%d'%(i+1)  for i in range(n)] )
+header   = 'Name,T2max,T2crit,P,' + ','.join( ['T2-%d'%(i+1)  for i in range(n)] )
 with open(fname1, 'w') as f:
 	f.write(header + '\n')
-	for res in results:
+	for name,res in zip(names,results):
 		zmax,zc,p,z = res['zmax'], res['zstar'], res['p'], res['z']
-		fmt      = ('%.3f,'*(z.size+3))[:-1] + '\n'
-		f.write( fmt % ((zmax,zc,p)+tuple(z)) )
+		fmt      = ('%s,' + '%.3f,'*(z.size+3))[:-1] + '\n'
+		f.write( fmt % ((name,zmax,zc,p)+tuple(z)) )
 
 
