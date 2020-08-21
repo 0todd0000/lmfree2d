@@ -49,7 +49,7 @@ for (name in names){
 	fname1  <- file.path(dirREPO, "Data", name, "landmarks_gpa.csv")
 	a      <- read.csv(fname0)   # 4 columns: shape, landmark, x, y
 	df     <- process.data(a)
-	write.table(df, file=fname1, row.names=F, sep=",")
+	write.table(df, file=fname1, row.names=F, sep=",", quote = FALSE)
 }
 
 

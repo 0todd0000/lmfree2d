@@ -46,9 +46,9 @@ for (i in 1:9){
 df      <- data.frame(Name=names, F=F, p=p)
 df$F    <- formatC(df$F, digits = 3, format = 'f')
 df$p    <- formatC(df$p, digits = 3, format = 'f')
-# # save:
-# fname1  <- file.path(dirREPO, "Results", "landmarks_ProcANOVA.csv")
-# write.table(df, file=fname1, row.names=FALSE , sep=",")
+# save:
+fname1  <- file.path(dirREPO, "Results", "landmarks_ProcANOVA.csv")
+write.table(df, file=fname1, row.names=FALSE , sep=",", quote = FALSE)
 
 
 
