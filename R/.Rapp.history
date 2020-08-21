@@ -6,5 +6,7 @@ source("/Users/todd/GitHub/lmfree2d/R/landmarks_GPA.R")
 source("/Users/todd/GitHub/lmfree2d/R/landmarks_ProcANOVA.R")
 res
 source("/Users/todd/GitHub/lmfree2d/R/landmarks_ProcANOVA.R")
+source("/Users/todd/GitHub/lmfree2d/R/landmarks_GPA.R")
 source("/Users/todd/GitHub/lmfree2d/R/landmarks_ProcANOVA.R")
-source("/Users/todd/GitHub/lmfree2d/R/landmarks_ProcANOVA.R")
+source("/Users/todd/GitHub/lmfree2d/R/landmarks_GPA.R")
+source("/Users/todd/GitHub/lmfree2d/R/landmarks_GPA.R")
