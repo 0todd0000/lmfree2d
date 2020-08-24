@@ -6,7 +6,6 @@
 import os,unipath
 import numpy as np
 from matplotlib import pyplot as plt
-from matplotlib import patheffects
 import pandas as pd
 
 
