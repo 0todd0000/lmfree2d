@@ -27,7 +27,7 @@ def write_csv(fname, shape, xy):
 # #(0) Shuffle point order for one dataset:
 # dirREPO   = unipath.Path( os.path.dirname(__file__) ).parent
 # name      = 'Bell'
-# fname0    = os.path.join(dirREPO, 'Data', name, 'geom.csv')
+# fname0    = os.path.join(dirREPO, 'Data', name, 'geom_original.csv')
 # a         = np.loadtxt(fname0, delimiter=',', skiprows=1)
 # shape     = np.asarray(a[:,0], dtype=int)
 # xy        = a[:,1:]
@@ -60,7 +60,7 @@ dirREPO   = unipath.Path( os.path.dirname(__file__) ).parent
 names     = ['Bell', 'Comma', 'Device8',    'Face', 'Flatfish', 'Hammer',    'Heart', 'Horseshoe', 'Key']
 np.random.seed(0)
 for name in names:
-	fname0    = os.path.join(dirREPO, 'Data', name, 'geom.csv')
+	fname0    = os.path.join(dirREPO, 'Data', name, 'geom_original.csv')
 	fname1    = os.path.join(dirREPO, 'Data', name, 'geom_s.csv')
 	a         = np.loadtxt(fname0, delimiter=',', skiprows=1)
 	shape     = np.asarray(a[:,0], dtype=int)
