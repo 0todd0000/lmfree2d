@@ -22,7 +22,7 @@ def load_geom_and_stack(fnameCSV):
 dirREPO    = unipath.Path( os.path.dirname(__file__) ).parent
 names      = ['Bell', 'Comma', 'Device8', 'Face',    'Flatfish', 'Hammer', 'Heart', 'Horseshoe', 'Key']
 name       = names[8]
-fnameXY    = os.path.join(dirREPO, 'Data', name, 'geom.csv')
+fnameXY    = os.path.join(dirREPO, 'Data', name, 'geom_original.csv')
 fnameLM    = os.path.join(dirREPO, 'Data', name, 'landmarks.csv')
 r          = load_geom_and_stack(fnameXY)
 df         = pd.read_csv(fnameLM, sep=',')
