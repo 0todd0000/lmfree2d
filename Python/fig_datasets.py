@@ -37,13 +37,13 @@ dirREPO    = unipath.Path( os.path.dirname(__file__) ).parent
 names      = ['Bell', 'Comma', 'Device8', 'Face',    'Flatfish', 'Hammer', 'Heart', 'Horseshoe', 'Key']
 R,LM       = [],[]
 for name in names:
-	fnameXY    = os.path.join(dirREPO, 'Data', name, 'geom.csv')
+	fnameXY    = os.path.join(dirREPO, 'Data', name, 'geom_original.csv')
 	fnameLM    = os.path.join(dirREPO, 'Data', name, 'landmarks.csv')
 	r          = load_geom_and_stack(fnameXY)
 	frame      = pd.read_csv(fnameLM, sep=',')
 	R.append(r)
 	LM.append(frame)
-templates  = [0, 2, 0,    0, 0, 0,   1, 0, 6]
+templates  = [0, 2, 0,    0, 0, 8,   1, 0, 0]
 
 
 
