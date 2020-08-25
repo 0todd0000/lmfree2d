@@ -29,8 +29,8 @@ colors = np.array([
 
 
 #(0) Load results:
-dirREPO   = unipath.Path( os.path.dirname(__file__) ).parent.parent
-fnameCSV  = os.path.join(dirREPO, 'Results', 'landmarks_massmulti.csv')
+dirREPO   = unipath.Path( os.path.dirname(__file__) ).parent
+fnameCSV  = os.path.join(dirREPO, 'Results', 'landmarks_massmv.csv')
 df        = pd.read_csv(fnameCSV, sep=',')
 ndatasets = len(df)
 
@@ -64,5 +64,5 @@ plt.show()
 
 
 #(2) Save figure:
-fnamePDF  = os.path.join(dirREPO, 'Figures', 'landmarks_massmulti.pdf')
+fnamePDF  = os.path.join(dirREPO, 'Figures', 'landmarks_massmv.pdf')
 plt.savefig(fnamePDF)

@@ -1,6 +1,6 @@
 
 '''
-Shuffle the point order for all shapes
+Randomly shuffle contour point order
 '''
 
 import os,unipath
@@ -70,8 +70,8 @@ names     = ['Bell', 'Comma', 'Device8',    'Face', 'Flatfish', 'Hammer',    'He
 random.seed(0)
 np.random.seed(0)
 for name in names:
-	fname0    = os.path.join(dirREPO, 'Data', name, 'geom_original.csv')
-	fname1    = os.path.join(dirREPO, 'Data', name, 'geom_s.csv')
+	fname0    = os.path.join(dirREPO, 'Data', name, 'contours.csv')
+	fname1    = os.path.join(dirREPO, 'Data', name, 'contours_s.csv')
 	a         = np.loadtxt(fname0, delimiter=',', skiprows=1)
 	shape     = np.asarray(a[:,0], dtype=int)
 	xy        = a[:,1:]

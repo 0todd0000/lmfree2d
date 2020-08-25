@@ -1,6 +1,5 @@
-
 '''
-Plot results for mass-multivariate analysis of the the landmark data.
+Plot examples of excluded shape classes.
 '''
 
 import os,unipath
@@ -25,7 +24,7 @@ colors = np.array([
 
 
 #(0) Load results:
-dirREPO   = unipath.Path( os.path.dirname(__file__) ).parent.parent
+dirREPO   = unipath.Path( os.path.dirname(__file__) ).parent
 dir0      = os.path.join(dirREPO, 'Data', '_ExampleExclusion')
 fname00   = os.path.join(dir0, 'cup0.csv')
 fname01   = os.path.join(dir0, 'cup1.csv')

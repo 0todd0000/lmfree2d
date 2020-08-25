@@ -42,7 +42,7 @@ def write_csv(fname, r):
 
 
 
-# #(0) Find optimum-order correspondence between two shapes:
+# #(0) Find optimum-order correspondence between two sets of contour points:
 # dirREPO   = unipath.Path( os.path.dirname(__file__) ).parent
 # name      = 'Bell'
 # fname0    = os.path.join(dirREPO, 'Data', name, 'geom_sro.csv')
@@ -94,8 +94,8 @@ dirREPO   = unipath.Path( os.path.dirname(__file__) ).parent
 names     = ['Bell', 'Comma', 'Device8',    'Face', 'Flatfish', 'Hammer',    'Heart', 'Horseshoe', 'Key']
 for name in names:
 	print( f'Finding roll correspondence for {name} dataset...' )
-	fname0    = os.path.join(dirREPO, 'Data', name, 'geom_sro.csv')
-	fname1    = os.path.join(dirREPO, 'Data', name, 'geom_sroc.csv')
+	fname0    = os.path.join(dirREPO, 'Data', name, 'contours_sro.csv')
+	fname1    = os.path.join(dirREPO, 'Data', name, 'contours_sroc.csv')
 	a         = np.loadtxt(fname0, delimiter=',', skiprows=1)
 	shape     = np.asarray(a[:,0], dtype=int)
 	xy        = a[:,1:]

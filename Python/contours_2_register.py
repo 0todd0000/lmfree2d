@@ -44,7 +44,7 @@ def write_csv(fname, shape, xy):
 
 
 
-# #(0) Register one shape pair (single CPD iteration):
+# #(0) Register one contour pair (single CPD iteration):
 # dirREPO   = unipath.Path( os.path.dirname(__file__) ).parent
 # name      = 'Bell'
 # fname0    = os.path.join(dirREPO, 'Data', name, 'geom_s.csv')
@@ -100,8 +100,8 @@ dirREPO   = unipath.Path( os.path.dirname(__file__) ).parent
 names     = ['Bell', 'Comma', 'Device8',    'Face', 'Flatfish', 'Hammer',    'Heart', 'Horseshoe', 'Key']
 for name in names:
 	print( f'Registering {name} dataset...' )
-	fname0    = os.path.join(dirREPO, 'Data', name, 'geom_s.csv')
-	fname1    = os.path.join(dirREPO, 'Data', name, 'geom_sr.csv')
+	fname0    = os.path.join(dirREPO, 'Data', name, 'contours_s.csv')
+	fname1    = os.path.join(dirREPO, 'Data', name, 'contours_sr.csv')
 	a         = np.loadtxt(fname0, delimiter=',', skiprows=1)
 	shape     = np.asarray(a[:,0], dtype=int)
 	xy        = a[:,1:]

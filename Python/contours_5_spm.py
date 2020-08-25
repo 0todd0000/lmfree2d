@@ -1,6 +1,6 @@
 
 '''
-Find optimum correspondence between shapes
+Conduct mass multivariate (SPM) testing on two samples of contour shapes
 '''
 
 import os,unipath
@@ -90,7 +90,7 @@ dirREPO   = unipath.Path( os.path.dirname(__file__) ).parent
 names     = ['Bell', 'Comma', 'Device8', 'Face',    'Flatfish', 'Hammer', 'Heart', 'Horseshoe', 'Key']
 for name in names:
 	print( f'\nProcessing the {name} dataset (parametric)...' )
-	fname0    = os.path.join(dirREPO, 'Data', name, 'geom_sroc.csv')
+	fname0    = os.path.join(dirREPO, 'Data', name, 'contours_sroc.csv')
 	fname1a   = os.path.join(dirREPO, 'Data', name, 'spm.csv')
 	fname1b   = os.path.join(dirREPO, 'Data', name, 'snpm.csv')
 	r         = load_and_stack(fname0)

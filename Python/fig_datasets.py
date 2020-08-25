@@ -37,7 +37,7 @@ dirREPO    = unipath.Path( os.path.dirname(__file__) ).parent
 names      = ['Bell', 'Comma', 'Device8', 'Face',    'Flatfish', 'Hammer', 'Heart', 'Horseshoe', 'Key']
 R,LM       = [],[]
 for name in names:
-	fnameXY    = os.path.join(dirREPO, 'Data', name, 'geom_original.csv')
+	fnameXY    = os.path.join(dirREPO, 'Data', name, 'contours.csv')
 	fnameLM    = os.path.join(dirREPO, 'Data', name, 'landmarks.csv')
 	r          = load_geom_and_stack(fnameXY)
 	frame      = pd.read_csv(fnameLM, sep=',')
