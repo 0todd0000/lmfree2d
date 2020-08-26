@@ -45,16 +45,14 @@ def two_sample_test(r0, r1, parametric=True):
 	return z,zi,zc,p
 
 
-def write_csv(fname, r, z, zc, p):
-	A  = np.vstack([r.T, z]).T
+def write_csv(fname, m0, m1, z, zc, p):
 	with open(fname, 'w') as f:
 		f.write('SPM results\n')
 		f.write('T2_critical = %.3f\n' %zc)
 		f.write('p = %.3f\n' %p)
-		# f.write('#Begin geometry\n')
-		f.write('X,Y,T2\n')
-		for (x,y),zz in zip(r, z):
-			f.write('%.6f,%.6f,%.3f\n' %(x,y,zz))
+		f.write('X0,Y0,X1,Y1,T2\n')
+		for (x0,y0),(x1,y1),zz in zip(m0, m1, z):
+			f.write('%.6f,%.6f,%.6f,%.6f,%.3f\n' %(x0,y0,x1,y1,zz))
 
 
 
@@ -63,7 +61,7 @@ def write_csv(fname, r, z, zc, p):
 # dirREPO   = unipath.Path( os.path.dirname(__file__) ).parent
 # names     = ['Bell', 'Comma', 'Device8', 'Face',    'Flatfish', 'Hammer', 'Heart', 'Horseshoe', 'Key']
 # name      = names[8]
-# fname0    = os.path.join(dirREPO, 'Data', name, 'geom_sroc.csv')
+# fname0    = os.path.join(dirREPO, 'Data', name, 'contours_sroc.csv')
 # r         = load_and_stack(fname0)
 # r0,r1     = r[:5], r[5:]
 # z,zi,zc,p = two_sample_test(r0, r1, parametric=True)
@@ -95,12 +93,12 @@ for name in names:
 	fname1b   = os.path.join(dirREPO, 'Data', name, 'snpm.csv')
 	r         = load_and_stack(fname0)
 	r0,r1     = r[:5], r[5:]
-	m         = r.mean(axis=0)
+	m0,m1     = r0.mean(axis=0), r1.mean(axis=0)
 	z,zi,zc,p = two_sample_test(r0, r1, parametric=True)
-	write_csv(fname1a, m, z, zc, p)
+	write_csv(fname1a, m0, m1, z, zc, p)
 	print( f'Processing the {name} dataset (non-parametric)...' )
 	z,zi,zc,p = two_sample_test(r0, r1, parametric=False)
-	write_csv(fname1b, m, z, zc, p)
+	write_csv(fname1b, m0, m1, z, zc, p)
 
 
 
