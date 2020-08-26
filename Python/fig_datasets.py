@@ -74,7 +74,9 @@ for ax,r,lm,template in zip(AX.flatten(), R, LM, templates):
 			ax.fill(rr[:,0], rr[:,1], edgecolor=c1, lw=1, fill=False, zorder=0)
 		if ii==template:
 			x,y = lm[ lm['Shape']==(ii+1) ].values[:,2:].T
-			ax.plot(x, y, 'o', ms=12, markeredgecolor=cmedge, markerfacecolor=cmface, zorder=51)
+			ax.plot(x, y, 'o', ms=14, markeredgecolor=cmedge, markerfacecolor=cmface, zorder=51)
+			for iii,(xx,yy) in enumerate(zip(x,y)):
+				ax.text(xx, yy-0.005, str(iii+1), color='w', zorder=52, size=10, ha='center', va='center')
 [ax.axis('equal') for ax in AX.flatten()]
 
 [ax.axis('off')  for ax in AX.flatten()]
