@@ -21,7 +21,7 @@ def load_geom_and_stack(fnameCSV):
 dirREPO    = unipath.Path( os.path.dirname(__file__) ).parent
 names      = ['Bell', 'Comma', 'Device8', 'Face',    'Flatfish', 'Hammer', 'Heart', 'Horseshoe', 'Key']
 name       = names[8]
-fnameXY    = os.path.join(dirREPO, 'Data', name, 'geom_original.csv')
+fnameXY    = os.path.join(dirREPO, 'Data', name, 'contours.csv')
 fnameLM    = os.path.join(dirREPO, 'Data', name, 'landmarks.csv')
 r          = load_geom_and_stack(fnameXY)
 df         = pd.read_csv(fnameLM, sep=',')
@@ -34,7 +34,6 @@ df         = pd.read_csv(fnameLM, sep=',')
 #(1) Plot:
 plt.close('all')
 plt.figure(figsize=(14,5))
-plt.get_current_fig_manager().window.move(0, 0)
 axx = np.linspace(0, 1, 6)[:5]
 axy = [0.5, 0]
 axw = axx[1]-axx[0]

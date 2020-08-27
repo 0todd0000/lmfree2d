@@ -58,7 +58,6 @@ snpm_results = [load_spm_csv(  os.path.join(dirREPO, 'Data', name, 'snpm.csv')  
 #(1) Plot:
 plt.close('all')
 plt.figure(figsize=(14,10))
-plt.get_current_fig_manager().window.move(0, 0)
 axx = np.linspace(0, 1, 4)[:3]
 axy = np.linspace(0.95, 0, 4)[1:]
 axw = axx[1]-axx[0]
