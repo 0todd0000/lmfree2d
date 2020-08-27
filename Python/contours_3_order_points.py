@@ -72,7 +72,7 @@ def reorder_points(points, optimum_order=False):
 
 def write_csv(fname, r):
 	shape  = np.hstack([[i+1]*rr.shape[0]  for i,rr in enumerate(r)])
-	with open(fname1, 'w') as f:
+	with open(fname, 'w') as f:
 		f.write('Shape,X,Y\n')
 		for s,(x,y) in zip(shape, np.vstack(r)):
 			f.write('%d,%.6f,%.6f\n' %(s,x,y))

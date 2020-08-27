@@ -22,7 +22,7 @@ def shuffle_points(r):
 
 
 def write_csv(fname, shape, xy):
-	with open(fname1, 'w') as f:
+	with open(fname, 'w') as f:
 		f.write('Shape,X,Y\n')
 		for s,(x,y) in zip(shape, xy):
 			f.write('%d,%.6f,%.6f\n' %(s,x,y))
