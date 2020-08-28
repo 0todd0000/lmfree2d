@@ -6,21 +6,6 @@ import lmfree2d as lm
 
 
 
-	
-def plot_registration(ax, r0, r1):
-	h0 = ax.plot(r0[:,0], r0[:,1], 'o', color=c0, ms=1, zorder=1)[0]
-	h1 = ax.plot(r1[:,0], r1[:,1], 'o', color=c1, ms=1, zorder=1)[0]
-	h2 = ax.plot(r0[0,0], r0[0,1], 'o', color=c0, mfc='w', mew=2, ms=8, zorder=3)[0]
-	h3 = ax.plot(r1[0,0], r1[0,1], 'o', color=c1, mfc='w', mew=2, ms=8, zorder=3)[0]
-	for (x0,y0),(x1,y1) in zip(r0,r1):
-		h4 = ax.plot([x0,x1], [y0,y1], '-', color=c2, lw=0.5, zorder=0)[0]
-	ax.axis('equal')
-	ax.axis('off')
-	return h0,h1,h2,h3,h4
-
-
-
-
 #(0) Load data:
 dirREPO   = lm.get_repository_path()
 names     = ['Bell', 'Comma', 'Device8', 'Face',    'Flatfish', 'Hammer', 'Heart', 'Horseshoe', 'Key']
@@ -57,11 +42,10 @@ axx       = np.linspace(0, 1, 5)[:4]
 AX        = [plt.axes([x,0,axw,axh])  for x in axx]
 ax0,ax1,ax2,ax3 = AX
 # plot:
-c0,c1,c2  = 'k', lm.colors[0], lm.colors[2]
-handles   = plot_registration(ax0, rA0, rA1)
-plot_registration(ax1, rB0, rB1)
-plot_registration(ax2, rC0, rC1)
-plot_registration(ax3, rD0, rD1)
+handles   = lm.plot_correspondence(ax0, rA0, rA1)
+lm.plot_correspondence(ax1, rB0, rB1)
+lm.plot_correspondence(ax2, rC0, rC1)
+lm.plot_correspondence(ax3, rD0, rD1)
 # panel labels:
 [ax.text(0.52, 0.99, '(%s)' %chr(97+i), size=14, ha='center', transform=ax.transAxes)   for i,ax in enumerate(AX)]
 labels    = ['Original', 'Ordered', 'Rolled', 'Optimum Roll']

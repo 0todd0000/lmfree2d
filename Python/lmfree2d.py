@@ -169,14 +169,28 @@ def order_points_clockwise(verts, clockwise=True):
 	return verts
 
 
-def plot_correspondence(ax, r0, r1):
-	x0,y0     = r0.T
-	x1,y1     = r1.T
-	ax.plot(x0, y0, 'k.', ms=10)
-	ax.plot(x1, y1, '.', color='0.7', ms=10)
-	for xx0,xx1,yy0,yy1 in zip(x0,x1,y0,y1):
-		ax.plot([xx0,xx1], [yy0,yy1], 'c-', lw=0.5)
+# def plot_correspondence(ax, r0, r1):
+# 	x0,y0     = r0.T
+# 	x1,y1     = r1.T
+# 	ax.plot(x0, y0, 'k.', ms=10)
+# 	ax.plot(x1, y1, '.', color='0.7', ms=10)
+# 	for xx0,xx1,yy0,yy1 in zip(x0,x1,y0,y1):
+# 		ax.plot([xx0,xx1], [yy0,yy1], 'c-', lw=0.5)
+# 	ax.axis('equal')
+
+def plot_correspondence(ax, r0, r1, c0=None, c1=None, c2=None):
+	c0 = 'k' if (c0 is None ) else c0
+	c1 = colors[0] if (c1 is None ) else c1
+	c2 = colors[2] if (c2 is None ) else c2
+	h0 = ax.plot(r0[:,0], r0[:,1], 'o', color=c0, ms=1, zorder=1)[0]
+	h1 = ax.plot(r1[:,0], r1[:,1], 'o', color=c1, ms=1, zorder=1)[0]
+	h2 = ax.plot(r0[0,0], r0[0,1], 'o', color=c0, mfc='w', mew=2, ms=8, zorder=3)[0]
+	h3 = ax.plot(r1[0,0], r1[0,1], 'o', color=c1, mfc='w', mew=2, ms=8, zorder=3)[0]
+	for (x0,y0),(x1,y1) in zip(r0,r1):
+		h4 = ax.plot([x0,x1], [y0,y1], '-', color=c2, lw=0.5, zorder=0)[0]
 	ax.axis('equal')
+	ax.axis('off')
+	return h0,h1,h2,h3,h4
 
 
 
