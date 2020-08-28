@@ -24,7 +24,7 @@ colors = np.array([
 
 
 #(0) Load results:
-dirREPO   = unipath.Path( os.path.dirname(__file__) ).parent
+dirREPO   = lm.get_repository_path()
 dir0      = os.path.join(dirREPO, 'Data', '_ExampleExclusion')
 fname00   = os.path.join(dir0, 'cup0.csv')
 fname01   = os.path.join(dir0, 'cup1.csv')

@@ -28,9 +28,9 @@ def check_correspondence(ax, r0, r1):
 
 
 # #(0) Check correspondence for two shapes:
-# dirREPO   = unipath.Path( os.path.dirname(__file__) ).parent
+# dirREPO   = lm.get_repository_path()
 # name      = 'Bell'
-# fname0    = os.path.join(dirREPO, 'Data', name, 'geom_sroc.csv')
+# fname0    = os.path.join(dirREPO, 'Data', name, 'contours_sroc.csv')
 # a         = np.loadtxt(fname0, delimiter=',', skiprows=1)
 # shape     = np.asarray(a[:,0], dtype=int)
 # xy        = a[:,1:]
@@ -49,10 +49,10 @@ def check_correspondence(ax, r0, r1):
 
 
 #(1) Check correspondence for one dataset:
-dirREPO   = unipath.Path( os.path.dirname(__file__) ).parent
+dirREPO   = lm.get_repository_path()
 names     = ['Bell', 'Comma', 'Device8',    'Face', 'Flatfish', 'Hammer',    'Heart', 'Horseshoe', 'Key']
 name      = names[9]
-fname0    = os.path.join(dirREPO, 'Data', name, 'geom_sroc.csv')
+fname0    = os.path.join(dirREPO, 'Data', name, 'contours_sroc.csv')
 a         = np.loadtxt(fname0, delimiter=',', skiprows=1)
 shape     = np.asarray(a[:,0], dtype=int)
 xy        = a[:,1:]

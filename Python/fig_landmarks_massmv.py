@@ -29,7 +29,7 @@ colors = np.array([
 
 
 #(0) Load results:
-dirREPO   = unipath.Path( os.path.dirname(__file__) ).parent
+dirREPO   = lm.get_repository_path()
 fnameCSV  = os.path.join(dirREPO, 'Results', 'landmarks_massmv.csv')
 df        = pd.read_csv(fnameCSV, sep=',')
 ndatasets = len(df)

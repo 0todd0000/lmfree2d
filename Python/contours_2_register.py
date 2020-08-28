@@ -3,57 +3,24 @@
 Register contour points using the coherent point drift (CPD) algorithm
 '''
 
-import os,unipath
+import os
 import numpy as np
 from matplotlib import pyplot as plt
-import pycpd
+import lmfree2d as lm
 
 
-
-def register_cpd_single_pair(r0, r1):
-	reg     = pycpd.RigidRegistration(X=r0, Y=r1)	
-	reg.register()
-	r1r     = reg.TY
-	return r1r
-
-
-def register_cpd_dataset(xy, shape):
-	### get template shape:
-	u         = np.unique(shape)
-	npoints   = [(shape==uu).sum() for uu in u]  # number of points for each shape
-	ind       = np.argmax(npoints)  # choose the shape with
-	r0        = xy[shape==u[ind]]
-	### register:
-	xyr       = xy.copy()
-	for uu in u:
-		if uu!= u[ind]:
-			i      = shape==uu
-			xyr[i] = register_cpd_single_pair(r0, xy[i])
-	return xyr,r0
-
-
-def stack(xy, shape):
-	return np.array( [xy[shape==u]  for u in np.unique(shape)] )
-
-def write_csv(fname, shape, xy):
-	with open(fname, 'w') as f:
-		f.write('Shape,X,Y\n')
-		for s,(x,y) in zip(shape, xy):
-			f.write('%d,%.6f,%.6f\n' %(s,x,y))
 
 
 
 
 # #(0) Register one contour pair (single CPD iteration):
-# dirREPO   = unipath.Path( os.path.dirname(__file__) ).parent
+# dirREPO   = lm.get_repository_path()
 # name      = 'Bell'
-# fname0    = os.path.join(dirREPO, 'Data', name, 'geom_s.csv')
-# a         = np.loadtxt(fname0, delimiter=',', skiprows=1)
-# shape     = np.asarray(a[:,0], dtype=int)
-# xy        = a[:,1:]
-# r0        = xy[shape==1]  # template shape
-# r1        = xy[shape==2]  # source shape
-# r1r       = register_cpd_single_pair(r0, r1)
+# fname0    = os.path.join(dirREPO, 'Data', name, 'contours_s.csv')
+# r_all     = lm.read_csv(fname0)
+# r0        = r_all[0]  # template shape
+# r1        = r_all[1]  # source shape
+# r1r       = lm.register_cpd_single_pair(r0, r1)
 # ### check registration:
 # plt.close('all')
 # fig,AX  = plt.subplots( 1, 2, figsize=(8,3) )
@@ -69,24 +36,23 @@ def write_csv(fname, shape, xy):
 
 
 # #(1) Register one dataset:
-# dirREPO   = unipath.Path( os.path.dirname(__file__) ).parent
-# name      = 'Bell'
-# fname0    = os.path.join(dirREPO, 'Data', name, 'geom_s.csv')
-# a         = np.loadtxt(fname0, delimiter=',', skiprows=1)
-# shape     = np.asarray(a[:,0], dtype=int)
-# xy        = a[:,1:]
-# xyr,temp  = register_cpd_dataset(xy, shape)
+# dirREPO    = lm.get_repository_path()
+# name       = 'Bell'
+# fname0     = os.path.join(dirREPO, 'Data', name, 'contours_s.csv')
+# r0         = lm.read_csv(fname0)
+# ### register:
+# rtemplate  = lm.get_shape_with_most_points(r0)[0]
+# r1         = lm.register_cpd_dataset(r0, rtemplate)
 # ### check registration:
 # plt.close('all')
-# fig,AX    = plt.subplots( 1, 2, figsize=(8,3) )
-# ax0,ax1   = AX.flatten()
-# r0,r      = stack(xy, shape), stack(xyr, shape)
+# fig,AX     = plt.subplots( 1, 2, figsize=(8,3) )
+# ax0,ax1    = AX.flatten()
 # for rr in r0:
 # 	ax0.scatter(rr[:,0], rr[:,1], color='0.7', s=3)
-# for rr in r:
+# for rr in r1:
 # 	ax1.scatter(rr[:,0], rr[:,1], color='0.7', s=3)
-# ax0.scatter(temp[:,0], temp[:,1], color='b', s=5)
-# ax1.scatter(temp[:,0], temp[:,1], color='b', s=5)
+# ax0.scatter(rtemplate[:,0], rtemplate[:,1], color='b', s=5)
+# ax1.scatter(rtemplate[:,0], rtemplate[:,1], color='b', s=5)
 # ax0.axis('equal')
 # ax1.axis('equal')
 # ax0.set_title('Original', size=14)
@@ -96,14 +62,13 @@ def write_csv(fname, shape, xy):
 
 
 #(2) Register and save all datasets:
-dirREPO   = unipath.Path( os.path.dirname(__file__) ).parent
+dirREPO   = lm.get_repository_path()
 names     = ['Bell', 'Comma', 'Device8',    'Face', 'Flatfish', 'Hammer',    'Heart', 'Horseshoe', 'Key']
 for name in names:
 	print( f'Registering {name} dataset...' )
 	fname0    = os.path.join(dirREPO, 'Data', name, 'contours_s.csv')
 	fname1    = os.path.join(dirREPO, 'Data', name, 'contours_sr.csv')
-	a         = np.loadtxt(fname0, delimiter=',', skiprows=1)
-	shape     = np.asarray(a[:,0], dtype=int)
-	xy        = a[:,1:]
-	xyr,_     = register_cpd_dataset(xy, shape)
-	write_csv(fname1, shape, xyr)
+	r0        = lm.read_csv(fname0)
+	rtemplate = lm.get_shape_with_most_points(r0)[0]
+	r1        = lm.register_cpd_dataset(r0, rtemplate)
+	lm.write_csv(fname1, r1)

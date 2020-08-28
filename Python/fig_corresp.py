@@ -110,7 +110,7 @@ def plot_registration(ax, r0, r1):
 
 
 #(0) Load data:
-dirREPO   = unipath.Path( os.path.dirname(__file__) ).parent
+dirREPO   = lm.get_repository_path()
 names     = ['Bell', 'Comma', 'Device8', 'Face',    'Flatfish', 'Hammer', 'Heart', 'Horseshoe', 'Key']
 name      = names[0]
 fnameCSV  = os.path.join(dirREPO, 'Data', name, 'contours_sroc.csv')

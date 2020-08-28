@@ -119,10 +119,10 @@ def reorder_points(points, optimum_order=False):
 	
 
 #(0) Load data:
-dirREPO   = unipath.Path( os.path.dirname(__file__) ).parent
+dirREPO   = lm.get_repository_path()
 names     = ['Bell', 'Comma', 'Device8',    'Face', 'Flatfish', 'Hammer',    'Heart', 'Horseshoe', 'Key']
 name      = names[8]
-fname0    = os.path.join(dirREPO, 'Data', name, 'geom_original.csv')
+fname0    = os.path.join(dirREPO, 'Data', name, 'contours.csv')
 a         = np.loadtxt(fname0, delimiter=',', skiprows=1)
 shape     = np.asarray(a[:,0], dtype=int)
 xy        = a[:,1:]
