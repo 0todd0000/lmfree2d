@@ -117,6 +117,19 @@ def corresp_roll(r0, r1):
 	return np.roll(r1, i, axis=0),i
 
 
+def corresp_roll_dataset(r, rtemplate):
+	rc = []
+	n  = rtemplate.shape[0]
+	for i,rr in enumerate(r):
+		if not np.all(rr == rtemplate):
+			rr    = set_npoints(rr, n)
+		else:
+			rr    = set_npoints(rr, n)
+			rr,_  = corresp_roll(rtemplate, rr)
+		rc.append(rr)
+	return np.array(rc)
+
+
 def get_repository_path():
 	return unipath.Path( os.path.dirname(__file__) ).parent
 
@@ -154,6 +167,17 @@ def order_points_clockwise(verts, clockwise=True):
 	if cw==clockwise:
 		verts = verts[::-1]
 	return verts
+
+
+def plot_correspondence(ax, r0, r1):
+	x0,y0     = r0.T
+	x1,y1     = r1.T
+	ax.plot(x0, y0, 'k.', ms=10)
+	ax.plot(x1, y1, '.', color='0.7', ms=10)
+	for xx0,xx1,yy0,yy1 in zip(x0,x1,y0,y1):
+		ax.plot([xx0,xx1], [yy0,yy1], 'c-', lw=0.5)
+	ax.axis('equal')
+
 
 
 def random_roll(r):
@@ -194,8 +218,8 @@ def register_cpd_dataset(r, r0):
 			continue
 		r[i] = register_cpd_single_pair(r0, rr)
 	return r
-	
-	
+
+
 
 
 
