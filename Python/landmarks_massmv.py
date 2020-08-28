@@ -6,11 +6,12 @@ This script calculates the Hotelling's T2 statistic for each landmark,
 then conducts nonparametric, permutation inference.
 '''
 
-import os,unipath
+import os
 import numpy as np
 from matplotlib import pyplot as plt
 import pandas as pd
 import spm1d
+import lmfree2d as lm
 
 
 def two_sample_mass_multivariate_test(r0, r1):
@@ -31,7 +32,7 @@ def two_sample_mass_multivariate_test(r0, r1):
 
 # #(0) Conduct mass multivariate two-sample test for one dataset:
 # ### load data:
-# dirREPO  = unipath.Path( os.path.dirname(__file__) ).parent
+# dirREPO  = lm.get_repository_path()
 # name     = 'Bell'
 # fname    = os.path.join(dirREPO, 'Data', name, 'landmarks_gpa.csv')
 # df       = pd.read_csv(fname, sep=',')
@@ -48,7 +49,7 @@ def two_sample_mass_multivariate_test(r0, r1):
 
 
 #(1) Conduct mass multivariate two-sample test for all datasets:
-dirREPO  = unipath.Path( os.path.dirname(__file__) ).parent
+dirREPO  = lm.get_repository_path()
 names    = ['Bell', 'Comma', 'Device8',    'Face', 'Flatfish', 'Hammer',    'Heart', 'Horseshoe', 'Key']
 results  = []
 for name in names:
