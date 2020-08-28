@@ -1,5 +1,5 @@
 
-import os,unipath
+import os
 import numpy as np
 from matplotlib import pyplot as plt
 import lmfree2d as lm
