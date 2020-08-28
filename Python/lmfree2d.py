@@ -99,6 +99,7 @@ class TwoSampleSPMResults(object):
 	def write_csv(self, fname):
 		with open(fname, 'w') as f:
 			f.write('Two Sample SPM Results\n')
+			f.write('alpha = %.3f\n' %self.alpha)
 			f.write('T2_critical = %.3f\n' %self.zc)
 			f.write('p = %.3f\n' %self.p)
 			f.write('X0,Y0,X1,Y1,T2\n')
@@ -169,13 +170,13 @@ def read_csv(filename):
 def read_csv_spm(filename):
 	with open(filename, 'r') as f:
 		lines = f.readlines()
-	zc    = float( lines[1].strip().split(' = ')[1] ) 
-	p     = float( lines[2].strip().split(' = ')[1] ) 
-	A     = np.array([s.strip().split(',')   for s in lines[4:]], dtype=float)
+	alpha = float( lines[1].strip().split(' = ')[1] ) 
+	zc    = float( lines[2].strip().split(' = ')[1] ) 
+	p     = float( lines[3].strip().split(' = ')[1] ) 
+	A     = np.array([s.strip().split(',')   for s in lines[5:]], dtype=float)
 	m0    = A[:,:2]
 	m1    = A[:,2:4]
 	z     = A[:,4]
-	alpha = 0.05
 	return TwoSampleSPMResults(m0, m1, z, alpha, zc, p)
 
 
