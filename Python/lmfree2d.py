@@ -15,6 +15,19 @@ from sklearn.neighbors import NearestNeighbors
 import spm1d
 
 
+colors = np.array([
+	[177,139,187],
+	[166,154,196],
+	[132,118,181],
+	[225,215,231],
+	[252,227,205],
+	[231,179,159],
+	[213,160,104],
+	[166,198,226],
+	[134,167,202],
+   ]) / 255
+
+
 def pvalue2str(p, latex=False):
 	if latex:
 		s = r'$p < 0.001$' if (p < 0.001) else (r'$p = %.3f$' %p)
@@ -100,7 +113,7 @@ def corresp_roll(r0, r1):
 		r   = np.roll(r1, i, axis=0)
 		f.append( sse(r0, r) )
 	i       = np.argmin(f)
-	return np.roll(r1, i, axis=0)
+	return np.roll(r1, i, axis=0),i
 
 
 def get_repository_path():
@@ -153,6 +166,17 @@ def read_csv(filename):
 	xy        = np.array( a[:,1:] )
 	return np.array(  [xy[shape==u]   for u in np.unique(shape)]  )
 
+def read_csv_spm(filename):
+	with open(filename, 'r') as f:
+		lines = f.readlines()
+	zc    = float( lines[1].strip().split(' = ')[1] ) 
+	p     = float( lines[2].strip().split(' = ')[1] ) 
+	A     = np.array([s.strip().split(',')   for s in lines[4:]], dtype=float)
+	m0    = A[:,:2]
+	m1    = A[:,2:4]
+	z     = A[:,4]
+	alpha = 0.05
+	return TwoSampleSPMResults(m0, m1, z, alpha, zc, p)
 
 
 def register_cpd_single_pair(r0, r1):
@@ -212,6 +236,11 @@ def set_npoints(r, n):
 	pcurve.sample_size = n
 	return np.asarray( pcurve.evalpts )
 
+def set_matplotlib_rcparams():
+	plt.rcParams['mathtext.fontset'] = 'stix'
+	plt.rcParams['font.family']      = 'Arial'
+	plt.rcParams['xtick.labelsize']  = 8
+	plt.rcParams['ytick.labelsize']  = 8
 
 
 def shuffle_points(r):
@@ -236,9 +265,6 @@ def two_sample_test(r0, r1, alpha=0.05, parametric=True, iterations=-1):
 		p       = ( pdf >= z.max()).mean()  # p value (percentage of values in pdf greater than or equal to T2max)
 	m0,m1       = r0.mean(axis=0), r1.mean(axis=0)
 	return TwoSampleSPMResults(m0, m1, z, alpha, zc, p)
-	# zi        = z.copy()
-	# zi[z<zc]  = np.nan
-	# return z,zi,zc,p
 
 
 def write_csv(filename, r):

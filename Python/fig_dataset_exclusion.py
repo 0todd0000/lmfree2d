@@ -2,23 +2,10 @@
 Plot examples of excluded shape classes.
 '''
 
-import os,unipath
+import os
 import numpy as np
 from matplotlib import pyplot as plt
-
-
-
-colors = np.array([
-	[177,139,187],
-	[166,154,196],
-	[132,118,181],
-	[225,215,231],
-	[252,227,205],
-	[231,179,159],
-	[213,160,104],
-	[166,198,226],
-	[134,167,202],
-   ]) / 255
+import lmfree2d as lm
 
 
 
@@ -30,7 +17,7 @@ fname00   = os.path.join(dir0, 'cup0.csv')
 fname01   = os.path.join(dir0, 'cup1.csv')
 fname10   = os.path.join(dir0, 'octopus0.csv')
 fname11   = os.path.join(dir0, 'octopus1.csv')
-
+# load:
 r00       = np.loadtxt(fname00, delimiter=',', skiprows=1)
 r01       = np.loadtxt(fname01, delimiter=',', skiprows=1)
 r10       = np.loadtxt(fname10, delimiter=',', skiprows=1)
@@ -45,7 +32,7 @@ plt.figure(figsize=(12,4))
 axw   = 0.47
 ax0   = plt.axes([0,0,axw,1])
 ax1   = plt.axes([1-axw,0,axw,1])
-c0,c1 = colors[[1,2]]
+c0,c1 = lm.colors[[1,2]]
 lw    = 2
 ax0.plot(r00[:,0], r00[:,1],     color=c0, lw=lw)
 ax0.plot(r01[:,0]+1.1, r01[:,1], color=c1, lw=lw)

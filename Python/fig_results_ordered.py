@@ -1,47 +1,23 @@
 
-import os,unipath
+import os
 import numpy as np
 from matplotlib import pyplot as plt
 from matplotlib import patheffects
-import pandas as pd
-
-
-plt.rcParams['mathtext.fontset'] = 'stix'
-plt.rcParams['font.family']      = 'Arial'
-plt.rcParams['xtick.labelsize']  = 8
-plt.rcParams['ytick.labelsize']  = 8
-
-colors = np.array([
-	[177,139,187],
-	[166,154,196],
-	[132,118,181],
-	[225,215,231],
-	[252,227,205],
-	[231,179,159],
-	[213,160,104],
-	[166,198,226],
-	[134,167,202],
-   ]) / 255
-
-
-def load_geom_and_stack(fnameCSV):
-	a         = np.loadtxt(fnameCSV, delimiter=',', skiprows=1)
-	shape     = np.asarray(a[:,0], dtype=int)
-	xy        = a[:,1:]
-	return np.array( [xy[shape==u]  for u in np.unique(shape)] )
+import lmfree2d as lm
 
 
 
 #(0) Load data:
-dirREPO    = unipath.Path( os.path.dirname(__file__) ).parent
+dirREPO    = lm.get_repository_path()
 names      = ['Bell', 'Comma', 'Device8', 'Face',    'Flatfish', 'Hammer', 'Heart', 'Horseshoe', 'Key']
-R          = [load_geom_and_stack(os.path.join(dirREPO, 'Data', name, 'contours_sro.csv'))   for name in names]
+R          = [lm.read_csv(os.path.join(dirREPO, 'Data', name, 'contours_sro.csv'))   for name in names]
 templates  = [0, 2, 0,    0, 0, 8,   1, 0, 0]
 
 
 
 #(1) Plot:
 plt.close('all')
+lm.set_matplotlib_rcparams()
 plt.figure(figsize=(14,10))
 axx = np.linspace(0, 1, 4)[:3]
 axy = np.linspace(0.95, 0, 4)[1:]
@@ -51,8 +27,8 @@ AX  = np.array([[plt.axes([xx,yy,axw,axh])  for xx in axx] for yy in axy])
 ax0,ax1,ax2, ax3,ax4,ax5,  ax6,ax7,ax8 = AX.flatten()
 
 
-c0,c1  = colors[2], colors[3]
-cmedge = colors[4]
+c0,c1  = lm.colors[2], lm.colors[3]
+cmedge = lm.colors[4]
 
 
 for ax,r,template in zip(AX.flatten(), R, templates):
