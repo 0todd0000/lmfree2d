@@ -6,6 +6,7 @@ This is the only module in this repository. All other PY files are scripts.
 '''
 
 import os,unipath
+from functools import wraps
 import numpy as np
 from matplotlib import pyplot as plt
 from geomdl import fitting
@@ -28,12 +29,58 @@ colors = np.array([
    ]) / 255
 
 
-def pvalue2str(p, latex=False):
+class _skip_template(object):
+	'''
+	Decorator class for skipping a template array.
+	
+	For a function call "g = f(a, b)", where a and b are NumPy arrays,
+	this decorator will cause the function to skip processing and return b,
+	if a and b are the same.
+	'''
+
+	def __init__(self, f):
+		self.f = f
+
+	def __call__(self, r, *args, **kwargs):
+		if np.array_equal(r, args[0]):
+			r1 = r.copy()
+		else:
+			r1 = self.f(r, *args, **kwargs)
+		return r1
+
+
+class _process_mulitple_contours(object):
+	'''
+	Decorator class for skipping a template array.
+	
+	For a function call "g = f(a)", where a is a NumPy array,
+	this decorator will cause the function to process all elements along
+	the first dimension of a, if a is not a 2D array.
+	
+	Notes:
+	- If a is a 2D array, this decorator will not have any effect.
+	- Otherwise this decorator will cause the function to iteratively
+	  process all 2D arrays: a[0], a[1], ...
+	'''
+
+	def __init__(self, f):
+		self.f = f
+
+	def __call__(self, r, *args, **kwargs):
+		if r.ndim in [1,3]:
+			r1 = np.array([self.f(rr, *args, **kwargs)  for rr in r])
+		else:
+			r1 = self.f(r, *args, **kwargs)
+		return r1
+
+
+def _pvalue2str(p, latex=False):
 	if latex:
 		s = r'$p < 0.001$' if (p < 0.001) else (r'$p = %.3f$' %p)
 	else:
 		s = '< 0.001' if (p<0.001) else '%.3f' %p
 	return s
+
 
 
 class TwoSampleSPMResults(object):
@@ -52,7 +99,7 @@ class TwoSampleSPMResults(object):
 		s += '----- Inference -----\n'
 		s += '   alpha        = %.3f\n' %self.alpha
 		s += '   T2_critical  = %.3f\n' %self.zc
-		s += '   p            = %s\n'   %pvalue2str(self.p)
+		s += '   p            = %s\n'   %_pvalue2str(self.p)
 		return s
 		
 	
@@ -93,7 +140,7 @@ class TwoSampleSPMResults(object):
 			ax.scatter(x1, y1, s=30, c=self.zi, cmap='hot', edgecolor='k', vmin=vmin, vmax=vmax, zorder=2, label='Suprathreshold Points')
 		# add p value as text:
 		pxo,pyo = poffset
-		ax.text(x0.mean()+pxo, y0.mean()+pyo, pvalue2str(self.p, latex=True), ha='center', size=12)
+		ax.text(x0.mean()+pxo, y0.mean()+pyo, _pvalue2str(self.p, latex=True), ha='center', size=12)
 		ax.axis('equal')
 
 	def write_csv(self, fname):
@@ -107,27 +154,27 @@ class TwoSampleSPMResults(object):
 				f.write('%.6f,%.6f,%.6f,%.6f,%.3f\n' %(x0,y0,x1,y1,zz))
 
 
-def corresp_roll(r0, r1):
-	f       = []
-	n       = r1.shape[0]
-	for i in range(n):
-		r   = np.roll(r1, i, axis=0)
-		f.append( sse(r0, r) )
+
+
+@_process_mulitple_contours
+@_skip_template
+def corresp_roll(r, r_template):
+	f       = [sse(r_template, np.roll(r, i, axis=0) )   for i in range(r.shape[0])]
 	i       = np.argmin(f)
-	return np.roll(r1, i, axis=0),i
+	return np.roll(r, i, axis=0)
 
 
-def corresp_roll_dataset(r, rtemplate):
-	rc = []
-	n  = rtemplate.shape[0]
-	for i,rr in enumerate(r):
-		if not np.all(rr == rtemplate):
-			rr    = set_npoints(rr, n)
-		else:
-			rr    = set_npoints(rr, n)
-			rr,_  = corresp_roll(rtemplate, rr)
-		rc.append(rr)
-	return np.array(rc)
+# def corresp_roll_dataset(r, rtemplate):
+# 	rc = []
+# 	n  = rtemplate.shape[0]
+# 	for i,rr in enumerate(r):
+# 		if not np.all(rr == rtemplate):
+# 			rr    = set_npoints(rr, n)
+# 		else:
+# 			rr    = set_npoints(rr, n)
+# 			rr,_  = corresp_roll(rtemplate, rr)
+# 		rc.append(rr)
+# 	return np.array(rc)
 
 
 def get_repository_path():
@@ -193,7 +240,7 @@ def plot_correspondence(ax, r0, r1, c0=None, c1=None, c2=None):
 	return h0,h1,h2,h3,h4
 
 
-
+@_process_mulitple_contours
 def random_roll(r):
 	n = r.shape[0]  # number of points
 	i = np.random.randint(1, n-1)
@@ -218,25 +265,22 @@ def read_csv_spm(filename):
 	return TwoSampleSPMResults(m0, m1, z, alpha, zc, p)
 
 
-def register_cpd_single_pair(r0, r1):
-	reg     = pycpd.RigidRegistration(X=r0, Y=r1)	
+
+
+@_process_mulitple_contours
+@_skip_template
+def register_cpd(r, r_template):
+	reg     = pycpd.RigidRegistration(X=r_template, Y=r)
 	reg.register()
 	r1r     = reg.TY
 	return r1r
 
 
-def register_cpd_dataset(r, r0):
-	r = r.copy()
-	for i,rr in enumerate(r):
-		if np.all(rr == r0):
-			continue
-		r[i] = register_cpd_single_pair(r0, rr)
-	return r
 
 
 
 
-
+@process_mulitple_contours
 def reorder_points(points, optimum_order=False, ensure_clockwise=True):
 	'''
 	Sorting points to form a continuous line
@@ -270,6 +314,7 @@ def reorder_points(points, optimum_order=False, ensure_clockwise=True):
 	return points
 
 
+@_process_mulitple_contours
 def set_npoints(r, n):
 	pcurve    = fitting.interpolate_curve(list(r), 3)
 	pcurve.sample_size = n
@@ -282,6 +327,7 @@ def set_matplotlib_rcparams():
 	plt.rcParams['ytick.labelsize']  = 8
 
 
+@_process_mulitple_contours
 def shuffle_points(r):
 	n     = r.shape[0]  # number of points
 	ind   = np.random.permutation(n)
