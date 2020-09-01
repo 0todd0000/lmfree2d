@@ -313,7 +313,7 @@ def register_cpd(r, r_template):
 
 
 
-@process_mulitple_contours
+@_process_mulitple_contours
 def reorder_points(points, optimum_order=False, ensure_clockwise=True):
 	'''
 	Sorting points to form a continuous line
