@@ -142,6 +142,7 @@ class TwoSampleSPMResults(object):
 		pxo,pyo = poffset
 		ax.text(x0.mean()+pxo, y0.mean()+pyo, _pvalue2str(self.p, latex=True), ha='center', size=12)
 		ax.axis('equal')
+		ax.axis('off')
 
 	def write_csv(self, fname):
 		with open(fname, 'w') as f:
@@ -184,8 +185,9 @@ def get_repository_path():
 def get_shape_with_most_points(r):
 	npoints    = [rr.shape[0]  for rr in r]
 	ind        = np.argmax(npoints)
-	return r[ind], max(npoints)
+	return r[ind], max(npoints), ind
 
+@_process_mulitple_contours
 def order_points_clockwise(verts, clockwise=True):
 	'''
 	Order a set of 2D points along the periphery in counterclockwise (or clockwise) order
@@ -225,19 +227,50 @@ def order_points_clockwise(verts, clockwise=True):
 # 		ax.plot([xx0,xx1], [yy0,yy1], 'c-', lw=0.5)
 # 	ax.axis('equal')
 
-def plot_correspondence(ax, r0, r1, c0=None, c1=None, c2=None):
-	c0 = 'k' if (c0 is None ) else c0
-	c1 = colors[0] if (c1 is None ) else c1
-	c2 = colors[2] if (c2 is None ) else c2
-	h0 = ax.plot(r0[:,0], r0[:,1], 'o', color=c0, ms=1, zorder=1)[0]
-	h1 = ax.plot(r1[:,0], r1[:,1], 'o', color=c1, ms=1, zorder=1)[0]
-	h2 = ax.plot(r0[0,0], r0[0,1], 'o', color=c0, mfc='w', mew=2, ms=8, zorder=3)[0]
-	h3 = ax.plot(r1[0,0], r1[0,1], 'o', color=c1, mfc='w', mew=2, ms=8, zorder=3)[0]
-	for (x0,y0),(x1,y1) in zip(r0,r1):
-		h4 = ax.plot([x0,x1], [y0,y1], '-', color=c2, lw=0.5, zorder=0)[0]
+def plot_correspondence(ax, r1, r0, c0=None, c1=None, c2=None):
+	def _plot(ax, r0, r1, c0=None, c1=None, c2=None):
+		c0 = 'k' if (c0 is None ) else c0
+		c1 = colors[0] if (c1 is None ) else c1
+		c2 = colors[2] if (c2 is None ) else c2
+		h0 = ax.plot(r0[:,0], r0[:,1], 'o', color=c0, ms=1, zorder=1)[0]
+		h1 = ax.plot(r1[:,0], r1[:,1], 'o', color=c1, ms=1, zorder=1)[0]
+		h2 = ax.plot(r0[0,0], r0[0,1], 'o', color=c0, mfc='w', mew=2, ms=8, zorder=3)[0]
+		h3 = ax.plot(r1[0,0], r1[0,1], 'o', color=c1, mfc='w', mew=2, ms=8, zorder=3)[0]
+		for (x0,y0),(x1,y1) in zip(r0,r1):
+			h4 = ax.plot([x0,x1], [y0,y1], '-', color=c2, lw=0.5, zorder=0)[0]
+		return h0,h1,h2,h3,h4
+	if r1.ndim == 2:
+		h0,h1,h2,h3,h4 = _plot(ax, r1, r0, c0, c1, c2)
+	else:
+		x,y   = np.meshgrid(1.2 + np.arange(5), [1.2,0])
+		for xx,yy,rr in zip(x.flatten(), y.flatten(), r1):
+			h0,h1,h2,h3,h4 = _plot(ax, rr+[xx,yy], r0+[xx,yy], c0, c1, c2)
 	ax.axis('equal')
 	ax.axis('off')
 	return h0,h1,h2,h3,h4
+
+
+def plot_point_order(ax, r):
+	def _plot(r):
+		ax.scatter(r[:,0], r[:,1], c=np.arange(r.shape[0]), cmap='jet')
+	if r.ndim == 2:
+		_plot(r)
+	else:
+		x,y   = np.meshgrid( 1.2 * np.arange(5), [1.2,0])
+		for xx,yy,rr in zip(x.flatten(), y.flatten(), r):
+			_plot( rr+[xx,yy] )
+	ax.axis('equal')
+	ax.axis('off')
+
+def plot_registration(ax, r, r_template):
+	if r.ndim == 2:
+		r = [r]
+	h0 = [ax.plot(rr[:,0], rr[:,1], 'ko', lw=0.5, zorder=0, ms=2)[0] for rr in r][0]
+	x,y = r_template.T
+	h1 = ax.plot(x, y, 'ro', ms=8, zorder=1)[0]
+	ax.legend([h0,h1], ['Source', 'Template'])
+	ax.axis('equal')
+	ax.axis('off')
 
 
 @_process_mulitple_contours
