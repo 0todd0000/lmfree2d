@@ -8,6 +8,7 @@ This is the only module in this repository. All other PY files are scripts.
 import os,unipath
 from functools import wraps
 import numpy as np
+import scipy.spatial
 from matplotlib import pyplot as plt
 from geomdl import fitting
 import networkx as nx
@@ -309,6 +310,14 @@ def register_cpd(r, r_template):
 	return r1r
 
 
+@_process_mulitple_contours
+@_skip_template
+def register_procrustes(r, r_template):
+	c       = r_template.mean(axis=0)
+	s       = np.linalg.norm( r_template - c )  # scale
+	_,b,_   = scipy.spatial.procrustes(r_template, r)
+	r1      = s * b + c
+	return r1
 
 
 
