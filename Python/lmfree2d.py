@@ -263,13 +263,20 @@ def plot_point_order(ax, r):
 	ax.axis('equal')
 	ax.axis('off')
 
-def plot_registration(ax, r, r_template):
+def plot_registration(ax, r, r_template=None):
 	if r.ndim == 2:
 		r = [r]
-	h0 = [ax.plot(rr[:,0], rr[:,1], 'ko', lw=0.5, zorder=0, ms=2)[0] for rr in r][0]
-	x,y = r_template.T
-	h1 = ax.plot(x, y, 'ro', ms=8, zorder=1)[0]
-	ax.legend([h0,h1], ['Source', 'Template'])
+	h0        = [ax.plot(rr[:,0], rr[:,1], 'ko', lw=0.5, zorder=0, ms=2)[0] for rr in r][0]
+	x,y       = None, None
+	if (r_template is None) and (r.ndim==3):
+		x,y   = r.mean(axis=0).T
+		label = 'Mean'
+	else:
+		x,y   = r_template.T
+		label = 'Template'
+	if x is not None:
+		h1 = ax.plot(x, y, 'ro', ms=8, zorder=1)[0]
+		ax.legend([h0,h1], ['Source', label])
 	ax.axis('equal')
 	ax.axis('off')
 
@@ -298,6 +305,11 @@ def read_csv_spm(filename):
 	z     = A[:,4]
 	return TwoSampleSPMResults(m0, m1, z, alpha, zc, p)
 
+def read_landmarks_csv(filename):
+	a         = np.loadtxt(filename, delimiter=',', skiprows=1)
+	shape     = np.asarray(a[:,0], dtype=int)
+	xy        = np.array( a[:,2:] )
+	return np.array(  [xy[shape==u]   for u in np.unique(shape)]  )
 
 
 
