@@ -60,9 +60,12 @@ for ax,r,lm,template in zip(AX.flatten(), R, LM, templates):
 
 
 ### panel labels:
-for i,ax in enumerate(AX.flatten()):
-	tx = ax.text(0.5, 0.5, '  %s  '%names[i], ha='center', va='center', name='Arial', size=18, transform=ax.transAxes, bbox=dict(facecolor='w', alpha=0.9), zorder=52)
+offsetx = [-0.02,0.07,0, 0,0,0, 0,-0.02,-0.25]
+offsety = [-0.05,0,0.3, 0,-0.1,0, -0.05,-0.05,-0.05]
+for i,(ax,ox,oy) in enumerate( zip(AX.flatten(), offsetx, offsety)):
+	tx = ax.text(0.5+ox, 0.5+oy, '  %s  '%names[i], ha='center', va='center', name='Arial', size=18, transform=ax.transAxes, bbox=dict(facecolor='w', alpha=0.9), zorder=52)
 	tx.set_path_effects([patheffects.withStroke(linewidth=1, foreground=cmedge)])
+[ax.text(0.05, 0.88, '(%s)'%chr(97+i), transform=ax.transAxes, size=16)  for i,ax in enumerate(AX.flatten())]
 
 
 plt.show()
