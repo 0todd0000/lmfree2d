@@ -2,6 +2,7 @@
 import os
 import numpy as np
 from matplotlib import pyplot as plt
+plt.ion()
 import lmfree2d as lm
 
 
@@ -13,7 +14,7 @@ fname0     = os.path.join(dirREPO, 'Data', '_ExampleCPD', 'contour0.csv')
 fname1     = os.path.join(dirREPO, 'Data', '_ExampleCPD', 'contour1.csv')
 r0         = np.loadtxt(fname0, delimiter=',', skiprows=1)
 r1         = np.loadtxt(fname1, delimiter=',', skiprows=1)
-r1r        = lm.register_cpd_single_pair(r0, r1)
+r1r        = lm.register_cpd(r0, r1)
 
 
 

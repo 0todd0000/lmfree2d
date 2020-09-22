@@ -7,6 +7,7 @@ Plot results for mass-multivariate (SPM) analysis of the the landmark data.
 import os
 import numpy as np
 from matplotlib import pyplot as plt
+plt.ion()
 import lmfree2d as lm
 
 

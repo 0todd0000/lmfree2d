@@ -5,6 +5,7 @@ Plot examples of excluded shape classes.
 import os
 import numpy as np
 from matplotlib import pyplot as plt
+plt.ion()
 import lmfree2d as lm
 
 

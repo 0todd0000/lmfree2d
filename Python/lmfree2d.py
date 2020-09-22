@@ -615,7 +615,7 @@ def reorder_points(points, optimum_order=False, ensure_clockwise=True):
 	https://stackoverflow.com/questions/37742358/sorting-points-to-form-a-continuous-line
 	'''
 	points = np.asarray(points, dtype=float)
-	clf    = NearestNeighbors(2, radius=0.05, algorithm='auto', leaf_size=4, metric='minkowski', p=4).fit(points)
+	clf    = NearestNeighbors(n_neighbors=2, radius=0.05, algorithm='auto', leaf_size=4, metric='minkowski', p=4).fit(points)
 	G      = clf.kneighbors_graph()
 	T      = nx.from_scipy_sparse_matrix(G)
 	order  = list(nx.dfs_preorder_nodes(T, None, None))

@@ -2,6 +2,7 @@
 import os
 import numpy as np
 from matplotlib import pyplot as plt
+plt.ion()
 import lmfree2d as lm
 
 
@@ -16,26 +17,26 @@ i0,i1     = 1, 2
 r0,r1     = r[i0], r[i1]
 
 
+
 #(1) Process:
-np.random.seed(3)
+np.random.seed(0)
 ### shuffle:
 rA0,rA1   = lm.shuffle_points(r0), lm.shuffle_points(r1)
 ### reorder:
 rB0,rB1   = [lm.reorder_points(r, optimum_order=True, ensure_clockwise=True)  for r in [rA0,rA1]]
 ### optimum roll correspondence:
 rD0       = rB0.copy()
-rD1,i     = lm.corresp_roll(rB0, rB1)
+rD1       = lm.corresp_roll(rB1, rB0)
 ### intermediary roll:
 rC0       = rB0.copy()
-rC1       = np.roll(rB1, i-30, axis=0)
-
+rC1       = np.roll(rB1, 75, axis=0)
 
 
 
 #(1) Plot:
 plt.close('all')
 lm.set_matplotlib_rcparams()
-plt.figure(figsize=(10,3))
+fig = plt.figure(figsize=(10,3))
 # create axes:
 axw,axh   = 0.25, 0.95
 axx       = np.linspace(0, 1, 5)[:4]
@@ -54,14 +55,11 @@ labels    = ['Original', 'Ordered', 'Rolled', 'Optimum Roll']
 labels    = ['Contour Points A', 'Contour Points B', 'Initial Point A', 'Initial Point B', 'Correspondence Line']
 leg       = ax0.legend(handles, labels, loc='lower left', bbox_to_anchor=(0.66, 0.6))
 plt.setp(leg.get_texts(), size=8)
-
 plt.show()
 
 
 
-
-#(2) Save figure:
+#(2) Save (or display) figure:
 fnamePDF  = os.path.join(dirREPO, 'Figures', 'corresp.pdf')
 plt.savefig(fnamePDF)
-
 

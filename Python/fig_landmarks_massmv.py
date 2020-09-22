@@ -6,6 +6,7 @@ Plot results for mass-multivariate analysis of the the landmark data.
 import os,unipath
 import numpy as np
 from matplotlib import pyplot as plt
+plt.ion()
 import pandas as pd
 import lmfree2d as lm
 

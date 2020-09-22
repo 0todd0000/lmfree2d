@@ -2,6 +2,7 @@
 import os
 import numpy as np
 from matplotlib import pyplot as plt
+plt.ion()
 from matplotlib import patheffects
 import pandas as pd
 import lmfree2d as lm

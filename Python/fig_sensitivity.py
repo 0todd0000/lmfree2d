@@ -6,6 +6,7 @@ Process all datasets and save results
 import os
 import numpy as np
 from matplotlib import pyplot as plt
+plt.ion()
 import lmfree2d as lm
 
 
@@ -32,6 +33,17 @@ names       = ['Bell', 'Comma', 'Device8',    'Face', 'Flatfish', 'Hammer',    '
 name        = names[6]
 fname0      = os.path.join(dirREPO, 'Data', name, 'contours.csv')
 r0          = lm.read_csv(fname0)
+r0          = lm.shuffle_points(r0)
+### CPD registration
+rtemp0,n,i  = lm.get_shape_with_most_points(r0)
+r1          = lm.register_cpd(r0, rtemp0)
+### reorder points:
+r2          = lm.reorder_points(r1, optimum_order=True, ensure_clockwise=True)
+### correspondence:
+rtemp1      = r2[i]
+r3          = lm.set_npoints(r2, n)
+r4          = lm.corresp_roll(r3, rtemp1)
+### process data:
 np.random.seed( 0 )  # Case 1
 r1,rtemp1   = process_data(r0)
 np.random.seed( 2 )  # Case 2
