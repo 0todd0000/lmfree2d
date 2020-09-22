@@ -40,7 +40,7 @@ process.data <- function (a){
 # #(0) Conduct Procrustes ANOVA for one dataset:
 # dirREPO <- dirname( dirname( sys.frame(1)$ofile ) )
 # name    <- "Bell"
-# fname0  <- file.path(dirREPO, "Data", name, "geom_sroc.csv")
+# fname0  <- file.path(dirREPO, "Data", name, "contours_sroc.csv")
 # a       <- read.csv(fname0)   # 3 columns: shape, x, y
 # res     <- process.data(a)  # F and p values
 # print(res)
@@ -57,7 +57,7 @@ p       <- numeric(9)
 t_gpa   <- numeric(9)
 t_ANOVA <- numeric(9)
 for (i in 1:9){
-	fname0     <- file.path(dirREPO, "Data", names[i], "geom_sroc.csv")
+	fname0     <- file.path(dirREPO, "Data", names[i], "contours_sroc.csv")
 	a          <- read.csv(fname0)   # 4 columns: shape, landmark, x, y
 	res        <- process.data(a)
 	F[i]       <- res[1]
