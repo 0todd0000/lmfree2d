@@ -67,7 +67,7 @@ for name in names:
 	results.append(res)
 	print(name, res['zmax'], res['p'])
 ### save:
-fname1   = os.path.join(dirREPO, 'Results', 'landmarks_massmulti.csv')
+fname1   = os.path.join(dirREPO, 'Results', 'landmarks_massmv.csv')
 n        = max([res['z'].size  for res in results])
 header   = 'Name,T2max,T2crit,P,' + ','.join( ['T2-%d'%(i+1)  for i in range(n)] )
 with open(fname1, 'w') as f:
