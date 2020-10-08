@@ -26,7 +26,7 @@ representing locations where shape effects were largest.
 
 <br>
 
-<img src="https://github.com/0todd0000/lmfree2d/tree/master/Figures/results_spm.pdf" alt="results_spm" width="700"/>
+<img src="Figures/results_spm.jpg" alt="results_spm" width="700"/>
 
 <br>
 
