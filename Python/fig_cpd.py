@@ -1,4 +1,9 @@
 
+'''
+Figure: coherent point drift (CPD) example.
+'''
+
+
 import os
 import numpy as np
 from matplotlib import pyplot as plt

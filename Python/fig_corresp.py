@@ -1,4 +1,9 @@
 
+'''
+Figure: demonstration of a simple point correspondence algorithm.
+'''
+
+
 import os
 import numpy as np
 from matplotlib import pyplot as plt

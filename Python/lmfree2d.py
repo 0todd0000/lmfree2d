@@ -7,6 +7,13 @@ of 2D contours shapes.
 Module containing functions used across scripts.
 
 This is the only module in this repository. All other PY files are scripts.
+
+Please cite the following paper:
+
+Pataky TC, Yagi M, Ichihashi N, Cox PG (2020). Automated, landmark-free,
+parametric hypothesis tests regarding two-dimensional contour shapes using
+coherent point drift registration and statistical parametric mapping.
+PeerJ Comp Sci (in review).
 '''
 
 import os,unipath

@@ -1,4 +1,8 @@
 
+'''
+Figure: coherent point drift registration results.
+'''
+
 import os
 import numpy as np
 from matplotlib import pyplot as plt
