@@ -73,7 +73,7 @@ for ax,cont,spm,snpm,xo,yo,pxo,pyo in zip(AX.flatten(), contours, spm_results, s
 cbh = plt.colorbar(  AX[0,0].collections[0], cax=plt.axes([0.32, 0.67, 0.015, 0.23])  )
 cbh.set_label(r'$T^2$ value', size=16)
 # legend:
-leg = custom_legend(AX[0,0], colors=[fc0,fc1,ec], labels=['Mean A + parametric results','Mean A + nonparametric results','Mean B'], linestyles=['-']*3, linewidths=[8,8,1], markerfacecolors=None, loc='lower left', bbox_to_anchor=(0.2,0.9))
+leg = custom_legend(AX[0,0], colors=['k',lm.colors[5],'k', 'k'], labels=['Mean A','Mean B','Individual Contours',r'Significant Contour Points ( at $\alpha$ = 0.05 )'], linestyles=['-','-','-','o'], linewidths=[3,3,0.5,1], markerfacecolors=[None,None,None,'r'], loc='lower left', bbox_to_anchor=(0.7,0.98), ncol=4)
 plt.setp(leg.get_texts(), size=12)
 
 
