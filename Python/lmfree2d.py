@@ -210,6 +210,46 @@ class TwoSampleSPMResults(object):
 		ax.axis('equal')
 		ax.axis('off')
 
+	def plot_with_all_contours(self, contoursA, contoursB, ax=None, offset=(0,0), poffset=(0,0), fc='0.65', ec='k', vmin=None, vmax=None):
+		'''
+		Plot statistical results.
+	
+		Below "m0" and "m1" are the mean shapes for the first and second groups, respectively.
+
+		Arguments:
+
+		* ax : a Matplotlib axes object (default: plt.gca() )
+		* offset : position offset for mean shapes
+		* poffset : position offset for p value text (relative to m0 centroid)
+		* fc : face color for m0
+		* ec : edge color for m1
+		* vmin : minimum color value for excursion set (values below vmin will have the same color as vmin)
+		* vmax : maximum color value for excursion set (values above vmax will have the same color as vmax)
+		'''
+		ax = plt.gca() if (ax is None) else ax
+		assert isinstance(ax, plt.Axes), '"ax" must be a Matplotlib Axes object'
+		x0,y0    = (self.m0 + offset).T
+		x1,y1    = (self.m1 + offset).T
+		x0,y0    = (self.m0 + offset).T
+		ax.fill(x0, y0, color=fc, zorder=0)
+		# plot contours and their mean:
+		c0,c1    = '0.2', colors[5]
+		for contours,color in zip([contoursA,contoursB], [c0,c1]):
+			contours += offset
+			for r in contours:
+				r = np.vstack( [ r , r[0] ] )
+				ax.plot(r[:,0], r[:,1], color=color, lw=0.5, zorder=0)
+			m     = contours.mean(axis=0)
+			ax.plot(m[:,0], m[:,1], color=color, lw=3, zorder=1)
+		# plot suprathreshold points:
+		if np.any( self.z > self.zc ):
+			ax.scatter(x1, y1, s=30, c=self.zi, cmap='hot', edgecolor='k', vmin=vmin, vmax=vmax, zorder=2, label='Suprathreshold Points')
+		# add p value as text:
+		pxo,pyo = poffset
+		ax.text(x0.mean()+pxo, y0.mean()+pyo, _pvalue2str(self.p, latex=True), ha='center', size=12)
+		ax.axis('equal')
+		ax.axis('off')
+	
 	def write_csv(self, fname):
 		'''
 		Write results to CSV file.
