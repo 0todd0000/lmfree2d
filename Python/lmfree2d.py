@@ -660,6 +660,13 @@ def reorder_points(points, optimum_order=False, ensure_clockwise=True):
 	References:
 	
 	https://stackoverflow.com/questions/37742358/sorting-points-to-form-a-continuous-line
+	
+	Another option:
+	
+	xy = np.sort( xy.view('i8,i8'), order=['f1'], axis=0).view(np.float)
+	
+	https://stackoverflow.com/questions/2828059/sorting-arrays-in-numpy-by-column
+	
 	'''
 	points = np.asarray(points, dtype=float)
 	clf    = NearestNeighbors(n_neighbors=2, radius=0.05, algorithm='auto', leaf_size=4, metric='minkowski', p=4).fit(points)
