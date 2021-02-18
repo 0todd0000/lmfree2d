@@ -77,6 +77,7 @@ labels = ['Correspondence', 'Hypothesis test']
 # column labels:
 ax0.set_title('Case 1', size=16)
 ax1.set_title('Case 2', size=16)
+[ax.text(0.15, 1.01, '(%s)' %chr(97+i), size=13, transform=ax.transAxes)   for i,ax in enumerate(AX.flatten())]
 ax2.legend()
 plt.show()
 

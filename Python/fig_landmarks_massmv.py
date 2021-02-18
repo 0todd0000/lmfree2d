@@ -39,6 +39,7 @@ for i,ax in enumerate(AX.flatten()):
 	ax.axhline(zc, color=lm.colors[0], ls='--' )
 	ax.text(5.7, zc+1.5, r'$T^2_{critical} = %.3f$'%zc, size=10, color=lm.colors[0])
 	ax.text(1, 30, r'$p = %.3f$'%row['P'], size=10)
+	ax.text(0.3, 35, '(%s)'%chr(97+i), size=12)
 	ax.set_title( row['Name'], color='k', size=16 )
 [ax.set_xlabel('Landmark', color='k', size=14)  for ax in AX[2]]
 [ax.set_ylabel('Test statistic value', color='k', size=14)  for ax in AX[:,0]]
