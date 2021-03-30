@@ -67,13 +67,18 @@ for ax,cont,spm,snpm,xo,yo,pxo,pyo in zip(AX.flatten(), contours, spm_results, s
 	# spm.plot(ax, fc=fc0, vmin=vmin, vmax=vmax)
 	# snpm.plot(ax, fc=fc1, offset=(xo,yo), poffset=(pxo,pyo), vmin=vmin, vmax=vmax)
 	ax.axis('off')
+
+ax = AX[0,0]
+ax.text(0.28, 1.03, 'Parametric', size=12, ha='center', transform=ax.transAxes, bbox=dict(facecolor=fc0))
+ax.text(0.74, 1.03, 'Nonparametric', size=12, ha='center', transform=ax.transAxes, bbox=dict(facecolor=fc1))
+
 # panel labels
 [ax.text(0.08, 0.88, '(%s)'%chr(97+i), transform=ax.transAxes, size=16)  for i,ax in enumerate(AX.flatten())]
 # colorbar
 cbh = plt.colorbar(  AX[0,0].collections[0], cax=plt.axes([0.32, 0.67, 0.015, 0.23])  )
 cbh.set_label(r'$T^2$ value', size=16)
 # legend:
-leg = custom_legend(AX[0,0], colors=['k',lm.colors[5],'k', 'k'], labels=['Mean A','Mean B','Individual Contours',r'Significant Contour Points ( at $\alpha$ = 0.05 )'], linestyles=['-','-','-','o'], linewidths=[3,3,0.5,1], markerfacecolors=[None,None,None,'r'], loc='lower left', bbox_to_anchor=(0.7,0.98), ncol=4)
+leg = custom_legend(AX[0,0], colors=['k',lm.colors[5],'k', 'k'], labels=['Mean A','Mean B','Individual Contours',r'Significant Contour Points ( at $\alpha$ = 0.05 )'], linestyles=['-','-','-','o'], linewidths=[3,3,0.5,1], markerfacecolors=[None,None,None,'r'], loc='lower left', bbox_to_anchor=(1.05,0.98), ncol=4)
 plt.setp(leg.get_texts(), size=12)
 
 
