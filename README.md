@@ -75,10 +75,10 @@ Please do **not** email the authors directly. Email requests for support will be
 
 ### Please cite:
 
-Pataky TC, Yagi M, Ichihashi N, Cox PG (2020). Automated, landmark-free,
+Pataky TC, Yagi M, Ichihashi N, Cox PG (2021). Automated, landmark-free,
 parametric hypothesis tests regarding two-dimensional contour shapes using
 coherent point drift registration and statistical parametric mapping.
-*PeerJ Comp Sci* (in review).
+*PeerJ Comp Sci* 7:e542. https://doi.org/10.7717/peerj-cs.542
 
 Carlier, A., Leonard, K., Hahmann, S., Morin, G., and Collins, M. (2016).
 The 2D shape structure dataset: a user annotated open access database.

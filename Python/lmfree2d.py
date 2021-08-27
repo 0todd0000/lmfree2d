@@ -10,11 +10,15 @@ This is the only module in this repository. All other PY files are scripts.
 
 Please cite the following paper:
 
-Pataky TC, Yagi M, Ichihashi N, Cox PG (2020). Automated, landmark-free,
+Pataky TC, Yagi M, Ichihashi N, Cox PG (2021). Automated, landmark-free,
 parametric hypothesis tests regarding two-dimensional contour shapes using
 coherent point drift registration and statistical parametric mapping.
-PeerJ Comp Sci (in review).
+PeerJ Comp Sci 7:e542.
+
+https://doi.org/10.7717/peerj-cs.542
 '''
+
+__version__ = '0.1.1'  #2021-08-27
 
 import os,unipath
 from functools import wraps
